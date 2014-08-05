@@ -8,6 +8,21 @@ __author__ = 'as1986'
 import logging
 
 
+def write_crf(lst_sentences, sd_fname, labels_fname):
+    from io import open
+
+    assert isinstance(lst_sentences, list)
+
+    with open(sd_fname, 'w', encoding='utf-8') as sd_fh, open(labels_fname, 'w', encoding='utf-8') as labels_fh:
+        for sentence in lst_sentences:
+            assert isinstance(sentence, list)
+            words = [x[0] for x in sentence]
+            labels = [x[1] for x in sentence]
+
+            sd_fh.write(u'{}\n'.format(u' '.join(words)))
+            labels_fh.write(u'{}\n'.format(u' '.join(labels)))
+
+
 def parse_line(line, init=u'english', tokenize=False):
     import re
 
@@ -24,14 +39,14 @@ def parse_line(line, init=u'english', tokenize=False):
         to_join = []
         for w in proper_line:
             if bracketRec.match(w):
-                to_join.append(w.replace(u'<',u'__begin__').replace(u'>',u'__end__'))
+                to_join.append(w.replace(u'<', u'__begin__').replace(u'>', u'__end__'))
             else:
                 to_join.append(w)
         to_tok = [u' '.join(to_join)]
         tokenized = util.tokenize(to_tok)[0].split()
         proper_line = []
         for t in tokenized:
-            proper_line.append(t.replace(u'__begin__',u'<').replace(u'__end__',u'>'))
+            proper_line.append(t.replace(u'__begin__', u'<').replace(u'__end__', u'>'))
 
     for w in proper_line:
         m = bracketRec.match(w)
@@ -60,20 +75,23 @@ def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('csv')
+    parser.add_argument('sd')
+    parser.add_argument('labels')
     parser.add_argument('--tokenize', action='store_true')
 
     args = parser.parse_args()
 
     with open(args.csv, 'rU') as fh:
-        print 'here'
+        sentences = []
         r = csv.reader(fh)
         lines = [x for x in r]
         print len(lines)
         for l in lines[1:]:
-             if len(l[4]) == 0:
-                 continue
-             s = parse_line(l[4].decode('utf-8'), tokenize=args.tokenize)
-             print s
+            if len(l[4]) == 0:
+                continue
+            sentences.append(parse_line(l[4].decode('utf-8'), tokenize=args.tokenize))
+
+        write_crf(sentences, args.sd, args.labels)
 
 
 if __name__ == '__main__':
