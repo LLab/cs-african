@@ -27,10 +27,10 @@ def parse_line(line, init=u'english', tokenize=False):
     import re
 
     stack = [init]
-    bracketRec = re.compile(ur'(<([^>]*)>)')
+    bracketRec = re.compile(ur'(<([^> ]+)\s*[^>]*>)')
 
     to_return = []
-    proper_line = [x.strip() for x in bracketRec.sub(ur' \1 ', line).split()]
+    proper_line = [x.strip() for x in bracketRec.sub(ur' <\2> ', line).split()]
 
     if tokenize:
         import util
@@ -49,11 +49,12 @@ def parse_line(line, init=u'english', tokenize=False):
             proper_line.append(t.replace(u'__begin__', u'<').replace(u'__end__', u'>'))
 
     for w in proper_line:
+        logging.info(u'current word: {}'.format(w))
         m = bracketRec.match(w)
         if m is not None:
             lang_string = m.groups()[1]
             if lang_string == stack[-1]:
-                logging.warn(u'language {} already appeared on stack'.format(lang_string))
+                logging.warn(u'language {} already appeared on stack for word {} in line \n {}'.format(lang_string, w, line))
             if lang_string.startswith('/'):
                 stack.pop()
                 if len(stack) == 0:
@@ -61,6 +62,7 @@ def parse_line(line, init=u'english', tokenize=False):
                     stack.append(init)
             else:
                 stack.append(lang_string)
+                logging.info(u'new language: {}'.format(lang_string))
             continue
         else:
             to_return.append((w, stack[-1]))
@@ -78,8 +80,12 @@ def main():
     parser.add_argument('sd')
     parser.add_argument('labels')
     parser.add_argument('--tokenize', action='store_true')
+    parser.add_argument('--log-to-file', action='store_true')
 
     args = parser.parse_args()
+
+    if args.log_to_file:
+       logging.basicConfig(filename='{}.log'.format(args.csv), filemode='w', level=logging.WARN)
 
     with open(args.csv, 'rU') as fh:
         sentences = []
