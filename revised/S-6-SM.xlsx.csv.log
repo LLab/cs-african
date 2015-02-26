@@ -1,5 +1,8 @@
-WARNING:root:language zulu already appeared on stack for word <zulu> in line 
+WARNING:root:language zulu already appeared on stack for word <zulu> in line #21 
  <zulu>Ngoba ngendlela engibheka ngayo nje emhlabeni jikelele uma ubheka amapercentage esiNgisi esikhulunywa ngayo kumacountry- maningi kakhulu.</zulu> And <zulu>siyakusiza ukuthi siku-expose coz vele i- iEnglish iyona</zulu> language <zulu label='expertise'> esetshenziswa kakhulu</zulu label='expertise'> like- like <zulu>lana eSouth Africa. So <zulu>uba-exposed kumaprovinces amaningi.</zulu>
-WARNING:root:stack empty after popping /zulu
-WARNING:root:stack empty after popping /zulu
-WARNING:root:stack empty after popping /zulu
+WARNING:root:stack empty after popping /zulu in line #35
+ <zulu>Kuyadiphenda nakhona lapho, uma kuwukuthi mhlawumbe ngikhuluma nabazali, lapho ngenza sho ukuthi angi- angilokhu ngimiksa ngoba kune- kunezinto abangeke bazi-andastende</zulu> along the way. <zulu>Kodwa umangikhuluma nabanye abantu ukuthi ngikhuluma noSisi noma-</zulu> <afrikaans>ja,</afrikaans> uBhuti wami. Ngiyakhona ukuthi ngimikse ngoba ngiyazi ukuthi ngalesosikhathi uzongiunderstander.</zulu>
+WARNING:root:stack empty after popping /zulu in line #70
+ Okay, so </zulu>ucabanga ukuthi</zulu> if <zulu>uMalema engathi khona uselokuza iparty yakhe ngeke asaphothwe abantu abaningi?</zulu>
+WARNING:root:stack empty after popping /zulu in line #70
+ Okay, so </zulu>ucabanga ukuthi</zulu> if <zulu>uMalema engathi khona uselokuza iparty yakhe ngeke asaphothwe abantu abaningi?</zulu>
